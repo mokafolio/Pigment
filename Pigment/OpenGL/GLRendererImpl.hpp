@@ -181,6 +181,14 @@ namespace pigment
             DynamicArray<UniquePtr<CommandBuffer>> m_commandBuffers;
             DynamicArray<const CommandBufferImpl *> m_commandBufferQueue;
             Allocator * m_alloc;
+
+            PFNGLPROGRAMUNIFORM1IPROC m_glProgramUniform1i;
+            PFNGLPROGRAMUNIFORM1FPROC m_glProgramUniform1f;
+            PFNGLPROGRAMUNIFORM2FVPROC m_glProgramUniform2fv;
+            PFNGLPROGRAMUNIFORM3FVPROC m_glProgramUniform3fv;
+            PFNGLPROGRAMUNIFORM4FVPROC m_glProgramUniform4fv;
+            PFNGLPROGRAMUNIFORMMATRIX3FVPROC m_glProgramUniformMatrix3fv;
+            PFNGLPROGRAMUNIFORMMATRIX4FVPROC m_glProgramUniformMatrix4fv;
         };
     }
 }

@@ -30,6 +30,53 @@ exit(EXIT_FAILURE); \
 } \
 } while(false)
 
+#if STICK_PLATFORM == STICK_PLATFORM_LINUX
+//on linux we manually retrieve all the function pointers we need
+/*PFNGLGENSAMPLERSPROC glGenSamplers = (PFNGLGENSAMPLERSPROC)glXGetProcAddress((GLubyte*)"glGenSamplers");
+PFNGLSAMPLERPARAMETERIPROC glSamplerParameteri = (PFNGLSAMPLERPARAMETERIPROC)glXGetProcAddress((GLubyte*)"glSamplerParameteri");
+PFNGLDELETESAMPLERSPROC glDeleteSamplers = (PFNGLDELETESAMPLERSPROC)glXGetProcAddress((GLubyte*)"glDeleteSamplers");
+PFNGLCREATESHADERPROC glCreateShader = (PFNGLCREATESHADERPROC)glXGetProcAddress((GLubyte*)"glCreateShader");
+PFNGLSHADERSOURCEPROC glShaderSource = (PFNGLSHADERSOURCEPROC)glXGetProcAddress((GLubyte*)"glShaderSource");
+PFNGLCOMPILESHADERPROC glCompileShader = (PFNGLCOMPILESHADERPROC)glXGetProcAddress((GLubyte*)"glCompileShader");
+PFNGLGETSHADERIVPROC glGetShaderiv = (PFNGLGETSHADERIVPROC)glXGetProcAddress((GLubyte*)"glGetShaderiv");
+PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)glXGetProcAddress((GLubyte*)"glGetShaderInfoLog");
+PFNGLDELETESHADERPROC glDeleteShader = (PFNGLDELETESHADERPROC)glXGetProcAddress((GLubyte*)"glDeleteShader");
+PFNGLCREATEPROGRAMPROC glCreateProgram = (PFNGLCREATEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glCreateProgram");
+PFNGLATTACHSHADERPROC glAttachShader = (PFNGLATTACHSHADERPROC)glXGetProcAddress((GLubyte*)"glAttachShader");
+PFNGLBINDATTRIBLOCATIONPROC glBindAttribLocation = (PFNGLBINDATTRIBLOCATIONPROC)glXGetProcAddress((GLubyte*)"glBindAttribLocation");
+PFNGLLINKPROGRAMPROC glLinkProgram = (PFNGLLINKPROGRAMPROC)glXGetProcAddress((GLubyte*)"glLinkProgram");
+PFNGLGETPROGRAMIVPROC glGetProgramiv = (PFNGLGETPROGRAMIVPROC)glXGetProcAddress((GLubyte*)"glGetProgramiv");
+PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)glXGetProcAddress((GLubyte*)"glGetProgramInfoLog");
+PFNGLDELETEPROGRAMPROC glDeleteProgram = (PFNGLDELETEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glDeleteProgram");
+PFNGLGETACTIVEUNIFORMPROC glGetActiveUniform = (PFNGLGETACTIVEUNIFORMPROC)glXGetProcAddress((GLubyte*)"glGetActiveUniform");
+PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)glXGetProcAddress((GLubyte*)"glGetUniformLocation");
+PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)glXGetProcAddress((GLubyte*)"glGenVertexArrays");
+PFNGLBINDVERTEXARRAYPROC glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)glXGetProcAddress((GLubyte*)"glBindVertexArray");
+PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced = (PFNGLDRAWELEMENTSINSTANCEDPROC)glXGetProcAddress((GLubyte*)"glDrawElementsInstanced");
+PFNGLDRAWARRAYSINSTANCEDPROC glDrawArraysInstanced = (PFNGLDRAWARRAYSINSTANCEDPROC)glXGetProcAddress((GLubyte*)"glDrawArraysInstanced");
+PFNGLSTENCILOPSEPARATEPROC glStencilOpSeparate = (PFNGLSTENCILOPSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilOpSeparate");
+PFNGLSTENCILFUNCSEPARATEPROC glStencilFuncSeparate = (PFNGLSTENCILFUNCSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilFuncSeparate");
+PFNGLSTENCILMASKSEPARATEPROC glStencilMaskSeparate = (PFNGLSTENCILMASKSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilMaskSeparate");
+PFNGLBLENDFUNCSEPARATEPROC glBlendFuncSeparate = (PFNGLBLENDFUNCSEPARATEPROC)glXGetProcAddress((GLubyte*)"glBlendFuncSeparate");
+PFNGLBLENDEQUATIONSEPARATEPROC glBlendEquationSeparate = (PFNGLBLENDEQUATIONSEPARATEPROC)glXGetProcAddress((GLubyte*)"glBlendEquationSeparate");
+PFNGLBINDSAMPLERPROC glBindSampler = (PFNGLBINDSAMPLERPROC)glXGetProcAddress((GLubyte*)"glBindSampler");
+PFNGLUSEPROGRAMPROC glUseProgram = (PFNGLUSEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glUseProgram");
+PFNGLPROGRAMUNIFORM1IPROC glProgramUniform1i = (PFNGLPROGRAMUNIFORM1IPROC)glXGetProcAddress((GLubyte*)"glProgramUniform1i");
+PFNGLBUFFERSUBDATAPROC glBufferSubData = (PFNGLBUFFERSUBDATAPROC)glXGetProcAddress((GLubyte*)"glBufferSubData");
+PFNGLBINDBUFFERPROC glBindBuffer = (PFNGLBINDBUFFERPROC)glXGetProcAddress((GLubyte*)"glBindBuffer");
+PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
+PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
+PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
+PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");*/
+PFNGLPROGRAMUNIFORM1FEXTPROC __glProgramUniform1fEXT = (PFNGLPROGRAMUNIFORM1FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform1fEXT");
+PFNGLPROGRAMUNIFORM2FEXTPROC __glProgramUniform2fEXT = (PFNGLPROGRAMUNIFORM2FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform2fEXT");
+PFNGLPROGRAMUNIFORM3FEXTPROC __glProgramUniform3fEXT = (PFNGLPROGRAMUNIFORM3FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform3fEXT");
+PFNGLPROGRAMUNIFORM4FEXTPROC __glProgramUniform4fEXT = (PFNGLPROGRAMUNIFORM4FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform4fEXT");
+PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC __glProgramUniformMatrix3fvEXT = (PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniformMatrix3fvEXT");
+PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC __glProgramUniformMatrix4fvEXT = (PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniformMatrix4fvEXT");
+#undef None //??? some glx thing
+#endif //STICK_PLATFORM == STICK_PLATFORM_LINUX
+
 namespace pigment
 {
     namespace detail
@@ -342,6 +389,16 @@ namespace pigment
 
         static_assert((Size)PixelDataType::Count == sizeof(s_glPixelDataType) / sizeof(s_glPixelDataType[0]), "PixelDataType mapping is not complete!");
 
+
+        void * getGLFunctionPointer(const char * _name)
+        {
+#if STICK_PLATFORM == STICK_PLATFORM_OSX
+            return (void*)dlsym(RTLD_DEFAULT, _name);
+#elif STICK_PLATFORM == STICK_PLATFORM_LINUX
+            return (void*)glXGetProcAddress((GLubyte*)_name);
+#endif
+        }
+
         RendererImpl::RendererImpl(Allocator & _alloc) :
             m_textures(this, _alloc),
             m_samplers(this, _alloc),
@@ -354,7 +411,20 @@ namespace pigment
             m_commandBufferQueue(_alloc),
             m_alloc(&_alloc)
         {
-
+            m_glProgramUniform1i = (PFNGLPROGRAMUNIFORM1IPROC)getGLFunctionPointer("glProgramUniform1i");
+            m_glProgramUniform1f = (PFNGLPROGRAMUNIFORM1FPROC)getGLFunctionPointer("glProgramUniform1f");
+            m_glProgramUniform2fv = (PFNGLPROGRAMUNIFORM2FVPROC)getGLFunctionPointer("glProgramUniform2fv");
+            m_glProgramUniform3fv = (PFNGLPROGRAMUNIFORM3FVPROC)getGLFunctionPointer("glProgramUniform3fv");
+            m_glProgramUniform4fv = (PFNGLPROGRAMUNIFORM4FVPROC)getGLFunctionPointer("glProgramUniform4fv");
+            m_glProgramUniformMatrix3fv = (PFNGLPROGRAMUNIFORMMATRIX3FVPROC)getGLFunctionPointer("glProgramUniformMatrix3fv");
+            m_glProgramUniformMatrix4fv = (PFNGLPROGRAMUNIFORMMATRIX4FVPROC)getGLFunctionPointer("glProgramUniformMatrix4fv");
+            STICK_ASSERT(m_glProgramUniform1i);
+            STICK_ASSERT(m_glProgramUniform1f);
+            STICK_ASSERT(m_glProgramUniform2fv);
+            STICK_ASSERT(m_glProgramUniform3fv);
+            STICK_ASSERT(m_glProgramUniform4fv);
+            STICK_ASSERT(m_glProgramUniformMatrix3fv);
+            STICK_ASSERT(m_glProgramUniformMatrix4fv);
         }
 
         RendererImpl::~RendererImpl()
@@ -443,7 +513,7 @@ namespace pigment
             m_samplers.remove(_sampler);
         }
 
-        static Error CompileShader(const String & _shaderCode, GLenum _shaderType, GLuint & _outHandle)
+        static Error compileShader(const String & _shaderCode, GLenum _shaderType, GLuint & _outHandle)
         {
             Error ret;
             GLenum glHandle = glCreateShader(_shaderType);
@@ -477,16 +547,16 @@ namespace pigment
         ProgramHandleResult RendererImpl::createProgram(const ProgramSettings & _settings)
         {
             GLuint vertexShader, geometryShader, fragmentShader;
-            Error err = CompileShader(_settings.vertexShaderCode, GL_VERTEX_SHADER, vertexShader);
+            Error err = compileShader(_settings.vertexShaderCode, GL_VERTEX_SHADER, vertexShader);
             if (!err)
             {
                 if (_settings.geometryShaderCode.length())
                 {
-                    err = CompileShader(_settings.geometryShaderCode, GL_GEOMETRY_SHADER, geometryShader);
+                    err = compileShader(_settings.geometryShaderCode, GL_GEOMETRY_SHADER, geometryShader);
                 }
                 if (!err)
                 {
-                    err = CompileShader(_settings.fragmentShaderCode, GL_FRAGMENT_SHADER, fragmentShader);
+                    err = compileShader(_settings.fragmentShaderCode, GL_FRAGMENT_SHADER, fragmentShader);
                 }
             }
             if (err) return err;
@@ -529,9 +599,12 @@ namespace pigment
                 free(str);
             }
 
-            glDeleteShader(vertexShader);
-            glDeleteShader(geometryShader);
-            glDeleteShader(fragmentShader);
+            ASSERT_NO_GL_ERROR(glDeleteShader(vertexShader));
+            if(_settings.geometryShaderCode.length())
+            {
+                ASSERT_NO_GL_ERROR(glDeleteShader(geometryShader));
+            }
+            ASSERT_NO_GL_ERROR(glDeleteShader(fragmentShader));
 
             if (err)
             {
@@ -543,6 +616,7 @@ namespace pigment
             prog.glHandle = program;
             //check what uniforms are active
             GLint uniformCount;
+            ASSERT_NO_GL_ERROR(glUseProgram(program));
             ASSERT_NO_GL_ERROR(glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &uniformCount));
             for (GLint i = 0; i < uniformCount; ++i)
             {
@@ -827,30 +901,31 @@ namespace pigment
                         auto mit = program.uniformMap.find(buf->m_stringBuffer[spvcmd.nameStrIndex]);
                         if (mit != program.uniformMap.end())
                         {
+
                             const GLProgram::UniformInfo & var = program.uniforms[mit->value];
                             if (var.type == ProgramVariableType::Float32)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniform1f(program.glHandle, var.glLoc, spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniform1f(program.glHandle, var.glLoc, spvcmd.value.floatValue));
                             }
                             else if (var.type == ProgramVariableType::Vec2f)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniform2fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniform2fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
                             }
                             else if (var.type == ProgramVariableType::Vec3f)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniform3fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniform3fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
                             }
                             else if (var.type == ProgramVariableType::Vec4f)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniform4fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniform4fv(program.glHandle, var.glLoc, 1, &spvcmd.value.floatValue));
                             }
                             else if (var.type == ProgramVariableType::Matrix3f)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniformMatrix3fv(program.glHandle, var.glLoc, 1, false, &spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniformMatrix3fv(program.glHandle, var.glLoc, 1, false, &spvcmd.value.floatValue));
                             }
                             else if (var.type == ProgramVariableType::Matrix4f)
                             {
-                                ASSERT_NO_GL_ERROR(glProgramUniformMatrix4fv(program.glHandle, var.glLoc, 1, false, &spvcmd.value.floatValue));
+                                ASSERT_NO_GL_ERROR(m_glProgramUniformMatrix4fv(program.glHandle, var.glLoc, 1, false, &spvcmd.value.floatValue));
                             }
                             else
                             {
@@ -973,7 +1048,7 @@ namespace pigment
                             break;
                         }
 
-                        ASSERT_NO_GL_ERROR(glProgramUniform1i(program.glHandle, program.uniforms[uit->value].glLoc, (GLint)index));
+                        ASSERT_NO_GL_ERROR(m_glProgramUniform1i(program.glHandle, program.uniforms[uit->value].glLoc, (GLint)index));
 
                         //the next draw call should rebind the program/tetures, so we invalidate the last handle here.
                         lastProgram = ProgramHandle();

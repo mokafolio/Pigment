@@ -14,8 +14,11 @@
 #include <OpenGL/glext.h>
 #endif //CGL_VERSION_1_3
 #elif STICK_PLATFORM == STICK_PLATFORM_LINUX
+#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glx.h>
+#include <GL/glext.h>
+#undef GL_GLEXT_PROTOTYPES
 #endif
 
 #endif //PIGMENT_OPENGL_GLPREREQUISITES_HPP
