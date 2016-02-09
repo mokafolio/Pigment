@@ -1,6 +1,10 @@
 #include <Pigment/OpenGL/GLRendererImpl.hpp>
 #include <Pigment/OpenGL/GLCommandBufferImpl.hpp>
 
+#if STICK_PLATFORM == STICK_PLATFORM_OSX
+#include <dlfcn.h>
+#endif
+
 #define ASSERT_NO_GL_ERROR(_func) do { _func; \
 GLenum err = glGetError(); \
 if(err != GL_NO_ERROR) \
