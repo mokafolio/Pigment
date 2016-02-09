@@ -6,7 +6,7 @@
 
 namespace pigment
 {
-    enum STICK_API RenderFlag : stick::UInt64
+    STICK_ENUM_WITH_BASE(STICK_API, RenderFlag, stick::UInt64)
     {
         RF_DepthTest = 1 << 0,
         RF_Multisampling = 1 << 1,
@@ -41,7 +41,7 @@ namespace pigment
                            ((stick::UInt64)1 << (RF_DepthFuncShift + 2)) | ((stick::UInt64)1 << (RF_DepthFuncShift + 3))
     };
 
-    enum STICK_API StencilFlag : stick::UInt64
+    STICK_ENUM_WITH_BASE(STICK_API, StencilFlag, stick::UInt64)
     {
         SF_StencilFuncFrontFaceShift = 0,
         SF_StencilFuncFrontFaceMask = ((stick::UInt64)1 << SF_StencilFuncFrontFaceShift) | ((stick::UInt64)1 << (SF_StencilFuncFrontFaceShift + 1)) |
@@ -69,14 +69,14 @@ namespace pigment
                                          ((stick::UInt64)1 << (SF_StencilOpDPPassBackFaceShift + 2))
     };
 
-    enum class STICK_API FaceDirection
+    STICK_API_ENUM_CLASS(FaceDirection)
     {
         Clockwise,
         CounterClockwise,
         Count
     };
 
-    enum class STICK_API FaceType
+    STICK_API_ENUM_CLASS(FaceType)
     {
         None,
         Front,
@@ -85,7 +85,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API CompareFunction
+    STICK_API_ENUM_CLASS(CompareFunction)
     {
         Equal,
         LessEqual,
@@ -98,7 +98,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API StencilOperation
+    STICK_API_ENUM_CLASS(StencilOperation)
     {
         Keep,
         Zero,
@@ -110,7 +110,7 @@ namespace pigment
         Invert
     };
 
-    enum class STICK_API BlendMode
+    STICK_API_ENUM_CLASS(BlendMode)
     {
         Add,
         Substract,
@@ -120,7 +120,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API BlendFunction
+    STICK_API_ENUM_CLASS(BlendFunction)
     {
         Zero,
         One,
@@ -139,7 +139,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API BufferDataType
+    STICK_API_ENUM_CLASS(BufferDataType)
     {
         UInt8,
         Int8,
@@ -152,7 +152,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API BufferUsage
+    STICK_API_ENUM_CLASS(BufferUsage)
     {
         DynamicDraw,
         StaticDraw,
@@ -166,7 +166,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API VertexDrawMode
+    STICK_API_ENUM_CLASS(VertexDrawMode)
     {
         Triangles,
         TrianglesAdjacency, //only for use with geometry shaders
@@ -182,7 +182,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API TextureFormat
+    STICK_API_ENUM_CLASS(TextureFormat)
     {
         R8,
         R16,
@@ -218,7 +218,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API ReadFormat
+    STICK_API_ENUM_CLASS(ReadFormat)
     {
         Red,
         Green,
@@ -231,7 +231,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API TextureWrap
+    STICK_API_ENUM_CLASS(TextureWrap)
     {
         Repeat,
         ClampToEdge,
@@ -239,7 +239,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API TextureFiltering
+    STICK_API_ENUM_CLASS(TextureFiltering)
     {
         Nearest,  //works with and without mipmapping
         Bilinear, //works with and without mipmapping
@@ -320,7 +320,7 @@ namespace pigment
 
     //TODO: Static assert this
 
-    enum class STICK_API PixelDataType
+    STICK_API_ENUM_CLASS(PixelDataType)
     {
         UInt8,
         Int8,
@@ -332,7 +332,7 @@ namespace pigment
         Count
     };
 
-    enum class STICK_API ProgramVariableType
+    STICK_API_ENUM_CLASS(ProgramVariableType)
     {
         None,
         Float32,
@@ -343,7 +343,7 @@ namespace pigment
         Matrix4f
     };
 
-    enum class STICK_API BufferType
+    STICK_API_ENUM_CLASS(BufferType)
     {
         Depth = 1,
         Color = 1 << 1,
