@@ -31,6 +31,7 @@ namespace pigment
             GLenum glType;
             TextureFormat format;
             UInt32 mipmapLevelCount;
+            RenderBufferHandle renderBuffer;
         };
 
         struct STICK_LOCAL GLSampler
@@ -84,6 +85,27 @@ namespace pigment
         struct STICK_LOCAL GLRenderState
         {
             RenderStateSettings settings;
+        };
+
+        struct STICK_LOCAL GLRenderBuffer
+        {
+            GLuint glHandle;
+            GLuint glHandleMSAA;
+            Size width;
+            Size height;
+            UInt32 sampleCount;
+            bool bDirty;
+
+            struct RenderTarget
+            {
+                GLuint msaaRenderBuffer;
+                GLenum attachmentPoint;
+            };
+
+            DynamicArray<TextureHandle> colorTargets;
+            HashMap<Size, RenderTarget> attachmentMap;
+            DynamicArray<GLuint> colorAttachmentPoints;
+            TextureHandle depthTarget;
         };
 
         struct STICK_LOCAL RendererImpl
@@ -144,6 +166,10 @@ namespace pigment
 
             void destroySampler(const SamplerHandle & _sampler);
 
+            RenderBufferResult createRenderBuffer(const RenderBufferSettings & _settings);
+
+            void destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets);
+
             ProgramHandleResult createProgram(const ProgramSettings & _settings);
 
             void destroyProgram(const ProgramHandle & _handle);
@@ -178,10 +204,14 @@ namespace pigment
             Storage<GLVertexBuffer, VertexBufferHandle> m_vertexBuffers;
             Storage<GLIndexBuffer, IndexBufferHandle> m_indexBuffers;
             Storage<GLRenderState, RenderStateHandle> m_renderStates;
+            Storage<GLRenderBuffer, RenderBufferHandle> m_renderBuffers;
             DynamicArray<UniquePtr<CommandBuffer>> m_commandBuffers;
             DynamicArray<const CommandBufferImpl *> m_commandBufferQueue;
             Allocator * m_alloc;
 
+
+            // opengl function pointers (maybe do this for all gl functions used?)
+            // might be a lot more portable.
             PFNGLPROGRAMUNIFORM1IPROC m_glProgramUniform1i;
             PFNGLPROGRAMUNIFORM1FPROC m_glProgramUniform1f;
             PFNGLPROGRAMUNIFORM2FVPROC m_glProgramUniform2fv;

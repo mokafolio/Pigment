@@ -2,6 +2,7 @@
 #define PIGMENT_SETTINGS_HPP
 
 #include <Pigment/Handles.hpp>
+#include <Pigment/Constants.hpp>
 #include <Pigment/VertexLayout.hpp>
 
 namespace pigment
@@ -32,6 +33,20 @@ namespace pigment
     {
         stick::DynamicArray<VertexBufferHandle> vertexBuffers;
         IndexBufferHandle indexBuffer;
+    };
+
+    struct STICK_API RenderBufferSettings
+    {
+        struct RenderTarget
+        {
+            TextureFormat format;
+            stick::UInt32 mipmapLevelCount;
+        };
+
+        stick::UInt32 sampleCount;
+        stick::Size width;
+        stick::Size height;
+        stick::DynamicArray<RenderTarget> renderTargets;
     };
 }
 

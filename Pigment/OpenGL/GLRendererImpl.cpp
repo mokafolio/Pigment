@@ -35,49 +35,6 @@ exit(EXIT_FAILURE); \
 } while(false)
 
 #if STICK_PLATFORM == STICK_PLATFORM_LINUX
-//on linux we manually retrieve all the function pointers we need
-/*PFNGLGENSAMPLERSPROC glGenSamplers = (PFNGLGENSAMPLERSPROC)glXGetProcAddress((GLubyte*)"glGenSamplers");
-PFNGLSAMPLERPARAMETERIPROC glSamplerParameteri = (PFNGLSAMPLERPARAMETERIPROC)glXGetProcAddress((GLubyte*)"glSamplerParameteri");
-PFNGLDELETESAMPLERSPROC glDeleteSamplers = (PFNGLDELETESAMPLERSPROC)glXGetProcAddress((GLubyte*)"glDeleteSamplers");
-PFNGLCREATESHADERPROC glCreateShader = (PFNGLCREATESHADERPROC)glXGetProcAddress((GLubyte*)"glCreateShader");
-PFNGLSHADERSOURCEPROC glShaderSource = (PFNGLSHADERSOURCEPROC)glXGetProcAddress((GLubyte*)"glShaderSource");
-PFNGLCOMPILESHADERPROC glCompileShader = (PFNGLCOMPILESHADERPROC)glXGetProcAddress((GLubyte*)"glCompileShader");
-PFNGLGETSHADERIVPROC glGetShaderiv = (PFNGLGETSHADERIVPROC)glXGetProcAddress((GLubyte*)"glGetShaderiv");
-PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)glXGetProcAddress((GLubyte*)"glGetShaderInfoLog");
-PFNGLDELETESHADERPROC glDeleteShader = (PFNGLDELETESHADERPROC)glXGetProcAddress((GLubyte*)"glDeleteShader");
-PFNGLCREATEPROGRAMPROC glCreateProgram = (PFNGLCREATEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glCreateProgram");
-PFNGLATTACHSHADERPROC glAttachShader = (PFNGLATTACHSHADERPROC)glXGetProcAddress((GLubyte*)"glAttachShader");
-PFNGLBINDATTRIBLOCATIONPROC glBindAttribLocation = (PFNGLBINDATTRIBLOCATIONPROC)glXGetProcAddress((GLubyte*)"glBindAttribLocation");
-PFNGLLINKPROGRAMPROC glLinkProgram = (PFNGLLINKPROGRAMPROC)glXGetProcAddress((GLubyte*)"glLinkProgram");
-PFNGLGETPROGRAMIVPROC glGetProgramiv = (PFNGLGETPROGRAMIVPROC)glXGetProcAddress((GLubyte*)"glGetProgramiv");
-PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)glXGetProcAddress((GLubyte*)"glGetProgramInfoLog");
-PFNGLDELETEPROGRAMPROC glDeleteProgram = (PFNGLDELETEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glDeleteProgram");
-PFNGLGETACTIVEUNIFORMPROC glGetActiveUniform = (PFNGLGETACTIVEUNIFORMPROC)glXGetProcAddress((GLubyte*)"glGetActiveUniform");
-PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)glXGetProcAddress((GLubyte*)"glGetUniformLocation");
-PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)glXGetProcAddress((GLubyte*)"glGenVertexArrays");
-PFNGLBINDVERTEXARRAYPROC glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)glXGetProcAddress((GLubyte*)"glBindVertexArray");
-PFNGLDRAWELEMENTSINSTANCEDPROC glDrawElementsInstanced = (PFNGLDRAWELEMENTSINSTANCEDPROC)glXGetProcAddress((GLubyte*)"glDrawElementsInstanced");
-PFNGLDRAWARRAYSINSTANCEDPROC glDrawArraysInstanced = (PFNGLDRAWARRAYSINSTANCEDPROC)glXGetProcAddress((GLubyte*)"glDrawArraysInstanced");
-PFNGLSTENCILOPSEPARATEPROC glStencilOpSeparate = (PFNGLSTENCILOPSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilOpSeparate");
-PFNGLSTENCILFUNCSEPARATEPROC glStencilFuncSeparate = (PFNGLSTENCILFUNCSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilFuncSeparate");
-PFNGLSTENCILMASKSEPARATEPROC glStencilMaskSeparate = (PFNGLSTENCILMASKSEPARATEPROC)glXGetProcAddress((GLubyte*)"glStencilMaskSeparate");
-PFNGLBLENDFUNCSEPARATEPROC glBlendFuncSeparate = (PFNGLBLENDFUNCSEPARATEPROC)glXGetProcAddress((GLubyte*)"glBlendFuncSeparate");
-PFNGLBLENDEQUATIONSEPARATEPROC glBlendEquationSeparate = (PFNGLBLENDEQUATIONSEPARATEPROC)glXGetProcAddress((GLubyte*)"glBlendEquationSeparate");
-PFNGLBINDSAMPLERPROC glBindSampler = (PFNGLBINDSAMPLERPROC)glXGetProcAddress((GLubyte*)"glBindSampler");
-PFNGLUSEPROGRAMPROC glUseProgram = (PFNGLUSEPROGRAMPROC)glXGetProcAddress((GLubyte*)"glUseProgram");
-PFNGLPROGRAMUNIFORM1IPROC glProgramUniform1i = (PFNGLPROGRAMUNIFORM1IPROC)glXGetProcAddress((GLubyte*)"glProgramUniform1i");
-PFNGLBUFFERSUBDATAPROC glBufferSubData = (PFNGLBUFFERSUBDATAPROC)glXGetProcAddress((GLubyte*)"glBufferSubData");
-PFNGLBINDBUFFERPROC glBindBuffer = (PFNGLBINDBUFFERPROC)glXGetProcAddress((GLubyte*)"glBindBuffer");
-PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
-PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
-PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");
-PFNGLBUFFERDATAPROC glBufferData = (PFNGLBUFFERDATAPROC)glXGetProcAddress((GLubyte*)"glBufferData");*/
-PFNGLPROGRAMUNIFORM1FEXTPROC __glProgramUniform1fEXT = (PFNGLPROGRAMUNIFORM1FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform1fEXT");
-PFNGLPROGRAMUNIFORM2FEXTPROC __glProgramUniform2fEXT = (PFNGLPROGRAMUNIFORM2FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform2fEXT");
-PFNGLPROGRAMUNIFORM3FEXTPROC __glProgramUniform3fEXT = (PFNGLPROGRAMUNIFORM3FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform3fEXT");
-PFNGLPROGRAMUNIFORM4FEXTPROC __glProgramUniform4fEXT = (PFNGLPROGRAMUNIFORM4FEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniform4fEXT");
-PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC __glProgramUniformMatrix3fvEXT = (PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniformMatrix3fvEXT");
-PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC __glProgramUniformMatrix4fvEXT = (PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC)glXGetProcAddress((GLubyte*)"glProgramUniformMatrix4fvEXT");
 #undef None //??? some glx thing
 #endif //STICK_PLATFORM == STICK_PLATFORM_LINUX
 
@@ -397,9 +354,9 @@ namespace pigment
         void * getGLFunctionPointer(const char * _name)
         {
 #if STICK_PLATFORM == STICK_PLATFORM_OSX
-            return (void*)dlsym(RTLD_DEFAULT, _name);
+            return (void *)dlsym(RTLD_DEFAULT, _name);
 #elif STICK_PLATFORM == STICK_PLATFORM_LINUX
-            return (void*)glXGetProcAddress((GLubyte*)_name);
+            return (void *)glXGetProcAddress((GLubyte *)_name);
 #endif
         }
 
@@ -411,6 +368,7 @@ namespace pigment
             m_vertexBuffers(this, _alloc),
             m_indexBuffers(this, _alloc),
             m_renderStates(this, _alloc),
+            m_renderBuffers(this, _alloc),
             m_commandBuffers(_alloc),
             m_commandBufferQueue(_alloc),
             m_alloc(&_alloc)
@@ -456,7 +414,7 @@ namespace pigment
         {
             GLuint handle;
             ASSERT_NO_GL_ERROR(glGenTextures(1, &handle));
-            return m_textures.append({handle, 0, 0, 0, GL_TEXTURE_2D, TextureFormat::RGBA8, 0});
+            return m_textures.append({handle, 0, 0, 0, GL_TEXTURE_2D, TextureFormat::RGBA8, 0, RenderBufferHandle()});
         }
 
         void RendererImpl::destroyTexture(const TextureHandle & _tex)
@@ -515,6 +473,162 @@ namespace pigment
             auto s = m_samplers.get(_sampler);
             ASSERT_NO_GL_ERROR(glDeleteSamplers(1, &s.glHandle));
             m_samplers.remove(_sampler);
+        }
+
+        static Error validateFrameBuffer()
+        {
+            GLenum err;
+            err = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+            switch (err)
+            {
+            case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+                return Error(ec::BadRenderBuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: Invalid OpenGL FBO attachment!", STICK_FILE, STICK_LINE);
+            case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+                return Error(ec::BadRenderBuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: OpenGL FBO has no attachments!", STICK_FILE, STICK_LINE);
+            case GL_FRAMEBUFFER_UNSUPPORTED:
+                return Error(ec::BadRenderBuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The OpenGL format combination is not supported by FBOs on your platform!", STICK_FILE, STICK_LINE);
+            case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+                return Error(ec::BadRenderBuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER!", STICK_FILE, STICK_LINE);
+            case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+                return Error(ec::BadRenderBuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER!", STICK_FILE, STICK_LINE);
+            }
+
+            return Error();
+        }
+
+        RenderBufferResult RendererImpl::createRenderBuffer(const RenderBufferSettings & _settings)
+        {
+            RenderBufferHandle rbh = m_renderBuffers.append(GLRenderBuffer());
+            GLRenderBuffer & renderBuffer = m_renderBuffers.get(rbh);
+            ASSERT_NO_GL_ERROR(glGenFramebuffers(1, &renderBuffer.glHandle));
+            if (_settings.sampleCount > 1)
+            {
+                ASSERT_NO_GL_ERROR(glGenFramebuffers(1, &renderBuffer.glHandleMSAA));
+            }
+
+            GLuint nextColorTargetID = 0;
+            for (const auto & rt : _settings.renderTargets)
+            {
+                const TextureFormatInfo & info = s_textureFormatInfos[static_cast<Size>(rt.format)];
+                const GLTextureFormat & format = s_glTextureFormats[static_cast<Size>(rt.format)];
+                bool bIsColorAttachment = info.bIsColorFormat;
+
+                GLuint texHandle;
+                ASSERT_NO_GL_ERROR(glGenTextures(1, &texHandle));
+
+                ASSERT_NO_GL_ERROR(glActiveTexture(GL_TEXTURE0));
+                ASSERT_NO_GL_ERROR(glBindTexture(GL_TEXTURE_2D, texHandle));
+
+                ASSERT_NO_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0));
+                ASSERT_NO_GL_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, rt.mipmapLevelCount));
+
+                GLenum dt = format.glFormat == GL_DEPTH_STENCIL ? GL_UNSIGNED_INT_24_8 : GL_UNSIGNED_BYTE;
+
+                ASSERT_NO_GL_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, format.glInternalFormat, (GLuint)_settings.width, (GLuint)_settings.height, 0, format.glFormat, dt, 0));
+
+                TextureHandle th = m_textures.append({texHandle, _settings.width, _settings.height, 0, GL_TEXTURE_2D, rt.format, 0, rbh});
+
+                ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, renderBuffer.glHandle));
+
+                GLRenderBuffer::RenderTarget target = {0, 0};
+                if (bIsColorAttachment)
+                {
+                    ASSERT_NO_GL_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + nextColorTargetID,
+                                       GL_TEXTURE_2D, texHandle, 0));
+                    renderBuffer.colorAttachmentPoints.append(GL_COLOR_ATTACHMENT0 + nextColorTargetID);
+                    target.attachmentPoint = GL_COLOR_ATTACHMENT0 + nextColorTargetID;
+                    renderBuffer.colorTargets.append(th);
+                }
+                else
+                {
+                    //if we don't set this, the framebuffer validation fails if we only have a depth tex attached
+                    ASSERT_NO_GL_ERROR(glDrawBuffer(GL_NONE));
+                    ASSERT_NO_GL_ERROR(glReadBuffer(GL_NONE));
+                    ASSERT_NO_GL_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, !info.bIsStencilFormat ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, texHandle, 0));
+
+                    target.attachmentPoint = info.bIsStencilFormat ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT;
+                    renderBuffer.depthTarget = th;
+                }
+
+                Error err = validateFrameBuffer();
+                if (err)
+                {
+                    destroyRenderBuffer(rbh, true);
+                    return err;
+                }
+
+                if (_settings.sampleCount > 1)
+                {
+                    Int32 maxSamples;
+
+                    ASSERT_NO_GL_ERROR(glGetIntegerv(GL_MAX_SAMPLES, &maxSamples));
+
+                    if (renderBuffer.sampleCount > maxSamples)
+                        renderBuffer.sampleCount = maxSamples;
+
+                    ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, renderBuffer.glHandleMSAA));
+
+                    GLuint glrb;
+                    ASSERT_NO_GL_ERROR(glGenRenderbuffers(1, &glrb));
+                    ASSERT_NO_GL_ERROR(glBindRenderbuffer(GL_RENDERBUFFER, glrb));
+                    ASSERT_NO_GL_ERROR(glRenderbufferStorageMultisample(GL_RENDERBUFFER, renderBuffer.sampleCount, format.glInternalFormat, (GLuint)renderBuffer.width, (GLuint)renderBuffer.height));
+
+                    if (bIsColorAttachment)
+                    {
+                        ASSERT_NO_GL_ERROR(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + nextColorTargetID, GL_RENDERBUFFER, glrb));
+                    }
+                    else
+                    {
+                        ASSERT_NO_GL_ERROR(glDrawBuffer(GL_NONE));
+                        ASSERT_NO_GL_ERROR(glReadBuffer(GL_NONE));
+                        ASSERT_NO_GL_ERROR(glFramebufferRenderbuffer(GL_FRAMEBUFFER, !info.bIsStencilFormat ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, glrb));
+                    }
+                    target.msaaRenderBuffer = glrb;
+
+                    renderBuffer.attachmentMap[th.m_index] = target;
+
+                    err = validateFrameBuffer();
+                    if (err)
+                    {
+                        destroyRenderBuffer(rbh, true);
+                        return err;
+                    }
+
+                    if (bIsColorAttachment)
+                        nextColorTargetID++;;
+                }
+            }
+        }
+
+        void RendererImpl::destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets)
+        {
+            GLRenderBuffer & rb = m_renderBuffers.get(_renderBufferHandle);
+            ASSERT_NO_GL_ERROR(glDeleteFramebuffers(1, &rb.glHandle));
+            if (rb.glHandleMSAA)
+            {
+                auto rit = rb.attachmentMap.begin();
+                for (; rit != rb.attachmentMap.end(); ++rit)
+                {
+                    ASSERT_NO_GL_ERROR(glDeleteRenderbuffers(1,  &(rit->value.msaaRenderBuffer)));
+                }
+                ASSERT_NO_GL_ERROR(glDeleteFramebuffers(1, &rb.glHandleMSAA));
+            }
+
+            if (_bDestroyRenderTargets)
+            {
+                for (auto & ct : rb.colorTargets)
+                {
+                    destroyTexture(ct);
+                }
+            }
+            else
+            {
+                for (auto & ct : rb.colorTargets)
+                {
+                    m_textures.get(ct).renderBuffer = RenderBufferHandle();
+                }
+            }
+            m_renderBuffers.remove(_renderBufferHandle);
         }
 
         static Error compileShader(const String & _shaderCode, GLenum _shaderType, GLuint & _outHandle)
@@ -604,7 +718,7 @@ namespace pigment
             }
 
             ASSERT_NO_GL_ERROR(glDeleteShader(vertexShader));
-            if(_settings.geometryShaderCode.length())
+            if (_settings.geometryShaderCode.length())
             {
                 ASSERT_NO_GL_ERROR(glDeleteShader(geometryShader));
             }

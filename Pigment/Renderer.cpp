@@ -5,6 +5,31 @@ namespace pigment
 {
     using namespace stick;
 
+    //class declaration is in Handles.hpp
+    RenderBuffer::RenderBuffer(const RenderBufferHandle & _handle, const TextureHandleArray & _colorTargets, const TextureHandle & _depthTarget) :
+        m_handle(_handle),
+        m_colorTargets(_colorTargets),
+        m_depthTarget(_depthTarget)
+    {
+
+    }
+
+    const RenderBuffer::TextureHandleArray & RenderBuffer::colorTargets() const
+    {
+        return m_colorTargets;
+    }
+
+    const TextureHandle & RenderBuffer::depthTarget() const
+    {
+        return m_depthTarget;
+    }
+
+    const RenderBufferHandle & RenderBuffer::handle() const
+    {
+        return m_handle;
+    }
+
+
     Renderer::Renderer(Allocator & _alloc) :
         m_pimpl(_alloc.create<detail::RendererImpl>(_alloc))
     {
@@ -44,6 +69,16 @@ namespace pigment
     void Renderer::destroySampler(const SamplerHandle & _sampler)
     {
         m_pimpl->destroySampler(_sampler);
+    }
+
+    RenderBufferResult Renderer::createRenderBuffer(const RenderBufferSettings & _settings)
+    {
+        return m_pimpl->createRenderBuffer(_settings);
+    }
+
+    void Renderer::destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets)
+    {
+        m_pimpl->destroyRenderBuffer(_renderBufferHandle, _bDestroyRenderTargets);
     }
 
     ProgramHandleResult Renderer::createProgram(const ProgramSettings & _settings)

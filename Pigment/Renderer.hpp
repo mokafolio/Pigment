@@ -39,6 +39,10 @@ namespace pigment
 
         void destroySampler(const SamplerHandle & _sampler);
 
+        RenderBufferResult createRenderBuffer(const RenderBufferSettings & _settings);
+
+        void destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets = true);
+
         ProgramHandleResult createProgram(const ProgramSettings & _settings);
 
         void destroyProgram(const ProgramHandle & _handle);
