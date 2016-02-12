@@ -196,6 +196,8 @@ namespace pigment
 
             Error submitCommandBuffer(const CommandBuffer & _buffer);
 
+            void finalizeRenderBufferForReading(GLRenderBuffer & _rb);
+
 
             Storage<GLTexture, TextureHandle> m_textures;
             Storage<GLSampler, SamplerHandle> m_samplers;
@@ -208,7 +210,7 @@ namespace pigment
             DynamicArray<UniquePtr<CommandBuffer>> m_commandBuffers;
             DynamicArray<const CommandBufferImpl *> m_commandBufferQueue;
             Allocator * m_alloc;
-
+            RenderBufferHandle m_activeRenderBuffer;
 
             // opengl function pointers (maybe do this for all gl functions used?)
             // might be a lot more portable.

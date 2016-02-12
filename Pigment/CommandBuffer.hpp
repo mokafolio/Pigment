@@ -152,6 +152,8 @@ namespace pigment
             updateIndexDataRaw(_handle, sizeof(T) * _elementOffset, sizeof(T) * _elementCount, _dataSource);
         }
 
+        void bindRenderBuffer(const RenderBufferHandle & _handle);
+        
         void clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings);
 
         void setViewport(stick::Float32 _x, stick::Float32 _y, stick::Float32 _width, stick::Float32 _height);

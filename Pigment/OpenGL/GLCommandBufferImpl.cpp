@@ -112,6 +112,13 @@ namespace pigment
             m_queue.append({CommandType::UpdateIndexData, cmd});
         }
 
+        void CommandBufferImpl::bindRenderBuffer(const RenderBufferHandle & _handle)
+        {
+            Command cmd;
+            cmd.bindRenderBufferCommand = {_handle};
+            m_queue.append({CommandType::BindRenderBuffer, cmd});
+        }
+
         void CommandBufferImpl::clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings)
         {
             Command cmd;

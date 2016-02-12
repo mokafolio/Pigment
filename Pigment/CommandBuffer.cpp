@@ -114,6 +114,11 @@ namespace pigment
         m_pimpl->updateIndexDataRaw(_handle, _byteCount, _byteCount, _dataSource);
     }
 
+    void CommandBuffer::bindRenderBuffer(const RenderBufferHandle & _handle)
+    {
+        m_pimpl->bindRenderBuffer(_handle);
+    }
+
     void CommandBuffer::clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings)
     {
         m_pimpl->clearBuffers(_buffersMask, _settings);

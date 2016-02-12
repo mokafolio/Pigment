@@ -922,6 +922,74 @@ namespace pigment
             m_commandBufferQueue.append(_buffer.m_pimpl.get());
         }
 
+        static void bindFrameBuffer(GLRenderBuffer & _rb, bool _bMarkDirty)
+        {
+            if (_rb.glHandleMSAA)
+            {
+                ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, _rb.glHandleMSAA));
+            }
+            else
+            {
+                ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, _rb.glHandle));
+            }
+            _rb.bDirty = _bMarkDirty;
+            ASSERT_NO_GL_ERROR(glDrawBuffers((GLuint)_rb.colorAttachmentPoints.count(), &_rb.colorAttachmentPoints[0]));
+        }
+
+        static void bindDefaulFrameBuffer()
+        {
+            ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+        }
+
+        void RendererImpl::finalizeRenderBufferForReading(GLRenderBuffer & _rb)
+        {
+            if (_rb.bDirty)
+            {
+                if (_rb.sampleCount > 1)
+                {
+                    auto tit = _rb.attachmentMap.begin();
+                    for (; tit != _rb.attachmentMap.end(); ++tit)
+                    {
+                        ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, _rb.glHandleMSAA));
+                        if (tit->value.attachmentPoint != GL_DEPTH_ATTACHMENT &&
+                                tit->value.attachmentPoint != GL_DEPTH_STENCIL_ATTACHMENT)
+                        {
+                            ASSERT_NO_GL_ERROR(glReadBuffer(tit->value.attachmentPoint));
+                        }
+
+                        ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _rb.glHandle));
+                        if (tit->value.attachmentPoint != GL_DEPTH_ATTACHMENT &&
+                                tit->value.attachmentPoint != GL_DEPTH_STENCIL_ATTACHMENT)
+                        {
+                            ASSERT_NO_GL_ERROR(glDrawBuffer(tit->value.attachmentPoint));
+                        }
+                        if (tit->value.attachmentPoint == GL_DEPTH_ATTACHMENT)
+                        {
+                            ASSERT_NO_GL_ERROR(glBlitFramebuffer(0, 0, (GLuint)_rb.width, (GLuint)_rb.height, 0, 0, (GLuint)_rb.width, (GLuint)_rb.height, GL_DEPTH_BUFFER_BIT, GL_NEAREST));
+                        }
+                        else if (tit->value.attachmentPoint == GL_DEPTH_STENCIL_ATTACHMENT)
+                        {
+                            ASSERT_NO_GL_ERROR(glBlitFramebuffer(0, 0, (GLuint)_rb.width, (GLuint)_rb.height, 0, 0, (GLuint)_rb.width, (GLuint)_rb.height, GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, GL_NEAREST));
+                        }
+                        else
+                        {
+                            ASSERT_NO_GL_ERROR(glBlitFramebuffer(0, 0, (GLuint)_rb.width, (GLuint)_rb.height, 0, 0, (GLuint)_rb.width, (GLuint)_rb.height, GL_COLOR_BUFFER_BIT, GL_NEAREST));
+                        }
+                        _rb.bDirty = false;
+                    }
+                    if (!m_activeRenderBuffer.isValid())
+                    {
+                        bindDefaulFrameBuffer();
+                    }
+                    else
+                    {
+                        GLRenderBuffer & rb = m_renderBuffers.get(m_activeRenderBuffer);
+                        bindFrameBuffer(rb, false);
+                    }
+                }
+            }
+        }
+
         Error RendererImpl::submit()
         {
             Error ret;
@@ -934,7 +1002,21 @@ namespace pigment
             {
                 for (const auto & cmd : buf->m_queue)
                 {
-                    if (cmd.type == CommandBufferImpl::CommandType::LoadPixels)
+                    if (cmd.type == CommandBufferImpl::CommandType::BindRenderBuffer)
+                    {
+                        const CommandBufferImpl::BindRenderBufferCommand & brcmd = cmd.command.bindRenderBufferCommand;
+                        m_activeRenderBuffer = brcmd.renderBuffer;
+                        if (!brcmd.renderBuffer.isValid())
+                        {
+                            bindDefaulFrameBuffer();
+                        }
+                        else
+                        {
+                            GLRenderBuffer & rb = m_renderBuffers.get(brcmd.renderBuffer);
+                            bindFrameBuffer(rb, true);
+                        }
+                    }
+                    else if (cmd.type == CommandBufferImpl::CommandType::LoadPixels)
                     {
                         GLenum type = GL_TEXTURE_1D;
                         if (cmd.command.loadPixelsCommand.height > 1)
@@ -1197,26 +1279,26 @@ namespace pigment
                                 if (program.textureUnits[i].uniformIndex != -1)
                                 {
                                     const GLTexture & tex = m_textures.get(program.textureUnits[i].texture);
-                                    /*bool bTexAllreadyBound = false;
+                                    bool bTexAllreadyBound = false;
                                     //if this texture is a render target, check if we need to blit it
-                                    if (tex.renderBuffer != RenderBufferHandle::invalidHandle)
+                                    if (tex.renderBuffer.isValid())
                                     {
-                                        RenderBuffer & rb = m_renderBuffers.get(tex.renderBuffer.index);
+                                        GLRenderBuffer & rb = m_renderBuffers.get(tex.renderBuffer);
                                         finalizeRenderBufferForReading(rb);
                                         if (tex.mipmapLevelCount > 1)
                                         {
                                             ASSERT_NO_GL_ERROR(glBindSampler(0, 0));
                                             ASSERT_NO_GL_ERROR(glActiveTexture(GL_TEXTURE0 + (GLuint)i));
-                                            ASSERT_NO_GL_ERROR(glBindTexture(tex.type, tex.glHandle));
-                                            ASSERT_NO_GL_ERROR(glGenerateMipmap(tex.type));
+                                            ASSERT_NO_GL_ERROR(glBindTexture(tex.glType, tex.glHandle));
+                                            ASSERT_NO_GL_ERROR(glGenerateMipmap(tex.glType));
                                             bTexAllreadyBound = true;
                                         }
-                                    }*/
+                                    }
 
                                     const GLSampler & sampler = m_samplers.get(program.textureUnits[i].sampler);
                                     ASSERT_NO_GL_ERROR(glBindSampler((GLuint)i, sampler.glHandle));
 
-                                    //if (!bTexAllreadyBound)
+                                    if (!bTexAllreadyBound)
                                     {
                                         ASSERT_NO_GL_ERROR(glActiveTexture(GL_TEXTURE0 + (GLuint)i));
                                         ASSERT_NO_GL_ERROR(glBindTexture(tex.glType, tex.glHandle));

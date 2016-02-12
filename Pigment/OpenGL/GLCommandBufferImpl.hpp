@@ -193,6 +193,8 @@ namespace pigment
 
             void updateIndexDataRaw(const IndexBufferHandle & _handle, Size _byteOffset, Size _byteCount, const void * _dataSource);
 
+            void bindRenderBuffer(const RenderBufferHandle & _handle);
+
             void clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings);
 
             void setViewport(Float32 _x, Float32 _y, Float32 _width, Float32 _height);
