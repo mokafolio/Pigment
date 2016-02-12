@@ -500,6 +500,10 @@ namespace pigment
         {
             RenderBufferHandle rbh = m_renderBuffers.append(GLRenderBuffer());
             GLRenderBuffer & renderBuffer = m_renderBuffers.get(rbh);
+            renderBuffer.sampleCount = _settings.sampleCount;
+            renderBuffer.width = _settings.width;
+            renderBuffer.height = _settings.height;
+            renderBuffer.bDirty = false;
             ASSERT_NO_GL_ERROR(glGenFramebuffers(1, &renderBuffer.glHandle));
             if (_settings.sampleCount > 1)
             {
@@ -598,6 +602,10 @@ namespace pigment
                         nextColorTargetID++;;
                 }
             }
+
+            ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+
+            return RenderBuffer(rbh, renderBuffer.colorTargets, renderBuffer.depthTarget);
         }
 
         void RendererImpl::destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets)

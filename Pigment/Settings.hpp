@@ -43,9 +43,9 @@ namespace pigment
             stick::UInt32 mipmapLevelCount;
         };
 
-        stick::UInt32 sampleCount;
         stick::Size width;
         stick::Size height;
+        stick::UInt32 sampleCount;
         stick::DynamicArray<RenderTarget> renderTargets;
     };
 }
