@@ -782,6 +782,9 @@ namespace pigment
                 prog.uniforms.append({loc, mt, String(nameBuffer)});
                 prog.uniformMap.insert(String(nameBuffer), prog.uniforms.count() - 1);
             }
+            GLint maxUnits;
+            ASSERT_NO_GL_ERROR(glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxUnits));
+            prog.textureUnits.resize(maxUnits, {TextureHandle(), SamplerHandle(), static_cast<Size>(-1)});
             return m_programs.append(move(prog));
         }
 

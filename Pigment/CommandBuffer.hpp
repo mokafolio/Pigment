@@ -153,6 +153,8 @@ namespace pigment
         }
 
         void bindRenderBuffer(const RenderBufferHandle & _handle);
+
+        void bindDefaultRenderBuffer();
         
         void clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings);
 

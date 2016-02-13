@@ -5,7 +5,7 @@ namespace pigment
     using namespace stick;
 
     CommandBuffer::CommandBuffer(Allocator & _allocator) :
-    m_pimpl(_allocator.create<detail::CommandBufferImpl>(_allocator))
+        m_pimpl(_allocator.create<detail::CommandBufferImpl>(_allocator))
     {
 
     }
@@ -117,6 +117,11 @@ namespace pigment
     void CommandBuffer::bindRenderBuffer(const RenderBufferHandle & _handle)
     {
         m_pimpl->bindRenderBuffer(_handle);
+    }
+
+    void CommandBuffer::bindDefaultRenderBuffer()
+    {
+        m_pimpl->bindRenderBuffer(RenderBufferHandle());
     }
 
     void CommandBuffer::clearBuffers(BufferType _buffersMask, const ClearBuffersSettings & _settings)
