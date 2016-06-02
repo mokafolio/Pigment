@@ -12,7 +12,7 @@ namespace pigment
 
     CommandBuffer::~CommandBuffer()
     {
-
+        
     }
 
     void CommandBuffer::loadPixelsRaw(const TextureHandle & _handle, Size _width, Size _height, Size _depth,

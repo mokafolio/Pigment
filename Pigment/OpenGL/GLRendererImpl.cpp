@@ -396,9 +396,9 @@ namespace pigment
 
         CommandBufferResult RendererImpl::createCommandBuffer()
         {
-            auto mem = m_alloc->allocate(sizeof(CommandBuffer));
-            m_commandBuffers.append(UniquePtr<CommandBuffer>(new(mem.ptr)CommandBuffer(*m_alloc)));
-            return *m_commandBuffers.back();
+            auto ptr = m_alloc->create<CommandBuffer>(*m_alloc);
+            m_commandBuffers.append(UniquePtr<CommandBuffer>(ptr));
+            return *m_commandBuffers.last();
         }
 
         void RendererImpl::destroyCommandBuffer(CommandBuffer & _buffer)
@@ -785,7 +785,7 @@ namespace pigment
             GLint maxUnits;
             ASSERT_NO_GL_ERROR(glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxUnits));
             prog.textureUnits.resize(maxUnits, {TextureHandle(), SamplerHandle(), static_cast<Size>(-1)});
-            return m_programs.append(move(prog));
+            return m_programs.append(std::move(prog));
         }
 
         void RendererImpl::destroyProgram(const ProgramHandle & _handle)
@@ -872,7 +872,7 @@ namespace pigment
             }
 
             ASSERT_NO_GL_ERROR(glBindVertexArray(0));
-            return m_meshes.append(move(mesh));
+            return m_meshes.append(std::move(mesh));
         }
 
         void RendererImpl::destroyMesh(const MeshHandle & _mesh)

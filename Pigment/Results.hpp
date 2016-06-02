@@ -31,24 +31,15 @@ namespace pigment
         TextureHandle m_depthTarget;
     };
 
-    STICK_RESULT_HOLDER(TextureHandleResultHolder, texture);
-    typedef stick::Result<TextureHandle, TextureHandleResultHolder> TextureHandleResult;
-    STICK_RESULT_HOLDER(SamplerHandleResultHolder, sampler);
-    typedef stick::Result<SamplerHandle, SamplerHandleResultHolder> SamplerHandleResult;
-    STICK_RESULT_HOLDER(ProgramHandleResultHolder, program);
-    typedef stick::Result<ProgramHandle, ProgramHandleResultHolder> ProgramHandleResult;
-    STICK_RESULT_HOLDER(MeshHandleResultHolder, mesh);
-    typedef stick::Result<MeshHandle, MeshHandleResultHolder> MeshHandleResult;
-    STICK_RESULT_HOLDER(VertexBufferHandleResultHolder, vertexBuffer);
-    typedef stick::Result<VertexBufferHandle, VertexBufferHandleResultHolder> VertexBufferHandleResult;
-    STICK_RESULT_HOLDER(IndexBufferHandleResultHolder, indexBuffer);
-    typedef stick::Result<IndexBufferHandle, IndexBufferHandleResultHolder> IndexBufferHandleResult;
-    STICK_RESULT_HOLDER(RenderStateHandleResultHolder, renderState);
-    typedef stick::Result<RenderStateHandle, RenderStateHandleResultHolder> RenderStateHandleResult;
-    STICK_RESULT_HOLDER(CommandBufferResultHolder, commandBuffer);
-    typedef stick::Result<CommandBuffer &, CommandBufferResultHolder> CommandBufferResult;
-    STICK_RESULT_HOLDER(RenderBufferResultHolder, renderBuffer);
-    typedef stick::Result<RenderBuffer, RenderBufferResultHolder> RenderBufferResult;
+    typedef stick::Result<TextureHandle> TextureHandleResult;
+    typedef stick::Result<SamplerHandle> SamplerHandleResult;
+    typedef stick::Result<ProgramHandle> ProgramHandleResult;
+    typedef stick::Result<MeshHandle> MeshHandleResult;
+    typedef stick::Result<VertexBufferHandle> VertexBufferHandleResult;
+    typedef stick::Result<IndexBufferHandle> IndexBufferHandleResult;
+    typedef stick::Result<RenderStateHandle> RenderStateHandleResult;
+    typedef stick::Result<CommandBuffer &> CommandBufferResult;
+    typedef stick::Result<RenderBuffer> RenderBufferResult;
 }
 
 #endif //PIGMENT_RESULTS_HPP

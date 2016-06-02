@@ -122,14 +122,14 @@ namespace pigment
 
                 const T & get(const H & _handle) const
                 {
-                    STICK_ASSERT(_handle.m_index < m_array.size());
+                    STICK_ASSERT(_handle.m_index < m_array.count());
                     STICK_ASSERT(_handle.m_rimpl == m_rimpl);
                     return m_array[_handle.m_index];
                 }
 
                 T & get(const H & _handle)
                 {
-                    STICK_ASSERT(_handle.m_index < m_array.size());
+                    STICK_ASSERT(_handle.m_index < m_array.count());
                     STICK_ASSERT(_handle.m_rimpl == m_rimpl);
                     return m_array[_handle.m_index];
                 }
@@ -141,7 +141,7 @@ namespace pigment
 
                 H append(T && _val)
                 {
-                    m_array.append(forward<T>(_val));
+                    m_array.append(std::forward<T>(_val));
                     return H(m_array.count() - 1, m_rimpl);
                 }
 

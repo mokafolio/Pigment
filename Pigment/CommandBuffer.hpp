@@ -81,7 +81,8 @@ namespace pigment
     class STICK_API CommandBuffer
     {
         friend class detail::RendererImpl;
-
+        friend class stick::Allocator;
+        
     public:
 
         CommandBuffer();

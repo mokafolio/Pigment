@@ -15,6 +15,7 @@ Pigment/Constants.hpp
 Pigment/ErrorCodes.hpp
 Pigment/Handles.hpp
 Pigment/Renderer.hpp
+Pigment/Results.hpp
 Pigment/RenderStateSettings.hpp
 Pigment/Settings.hpp
 Pigment/VertexLayout.hpp
@@ -37,9 +38,9 @@ Pigment/OpenGL/GLCommandBufferImpl.cpp
 
 add_library (Pigment SHARED ${PIGMENTSRC})
 add_library (PigmentStatic STATIC ${PIGMENTSRC})
-target_link_libraries(Pigment Stick ${PIGMENTDEPS})
-target_link_libraries(PigmentStatic Stick ${PIGMENTDEPS})
+target_link_libraries(Pigment ${PIGMENTDEPS})
+target_link_libraries(PigmentStatic ${PIGMENTDEPS})
 install (TARGETS Pigment PigmentStatic DESTINATION /usr/local/lib)
-install (FILES ${PIGMENTINC} DESTINATION /usr/local/include/Pic)
+install (FILES ${PIGMENTINC} DESTINATION /usr/local/include/Pigment)
 
 add_subdirectory (Examples)
