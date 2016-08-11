@@ -5,6 +5,7 @@
 #include <dlfcn.h>
 #endif
 
+#ifdef STICK_DEBUG
 #define ASSERT_NO_GL_ERROR(_func) do { _func; \
 GLenum err = glGetError(); \
 if(err != GL_NO_ERROR) \
@@ -33,6 +34,9 @@ break; \
 exit(EXIT_FAILURE); \
 } \
 } while(false)
+#else
+#define ASSERT_NO_GL_ERROR(_func) _func
+#endif
 
 #if STICK_PLATFORM == STICK_PLATFORM_LINUX
 #undef None //??? some glx thing
@@ -461,7 +465,7 @@ namespace pigment
             ASSERT_NO_GL_ERROR(glGenSamplers(1, &glHandle));
             ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_WRAP_S, s_glWrap[static_cast<Size>(_settings.wrapS)]));
             ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_WRAP_T, s_glWrap[static_cast<Size>(_settings.wrapT)]));
-            ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_WRAP_T, s_glWrap[static_cast<Size>(_settings.wrapR)]));
+            ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_WRAP_R, s_glWrap[static_cast<Size>(_settings.wrapR)]));
             ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_MAG_FILTER, magFilter));
             ASSERT_NO_GL_ERROR(glSamplerParameteri(glHandle, GL_TEXTURE_MIN_FILTER, minFilter));
 
