@@ -85,7 +85,7 @@ namespace pigment
     void CommandBuffer::setProgramVariableMatrix4f(const ProgramHandle & _program, const String & _name, Float32 * _ptr)
     {
         ProgramVariableValue v;
-        memcpy(v.mat3fValue.v, _ptr, sizeof(ProgramVariableValue::Mat3f));
+        memcpy(v.mat4fValue.v, _ptr, sizeof(ProgramVariableValue::Mat4f));
         setProgramVariable(_program, _name, v);
     }
 
