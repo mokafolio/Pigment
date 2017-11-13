@@ -4,6 +4,7 @@
 #include <Pigment/Settings.hpp>
 #include <Pigment/RenderStateSettings.hpp>
 #include <Pigment/Results.hpp>
+#include <Pigment/CommandBuffer.hpp>
 #include <Stick/Error.hpp>
 #include <Stick/UniquePtr.hpp>
 #include <Stick/Result.hpp>
