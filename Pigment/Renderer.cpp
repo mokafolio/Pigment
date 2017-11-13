@@ -31,7 +31,7 @@ namespace pigment
 
 
     Renderer::Renderer(Allocator & _alloc) :
-        m_pimpl(_alloc.create<detail::RendererImpl>(_alloc))
+        m_pimpl(stick::makeUnique<detail::RendererImpl>(_alloc, _alloc))
     {
 
     }

@@ -5,7 +5,7 @@ namespace pigment
     using namespace stick;
 
     CommandBuffer::CommandBuffer(Allocator & _allocator) :
-        m_pimpl(_allocator.create<detail::CommandBufferImpl>(_allocator))
+        m_pimpl(stick::makeUnique<detail::CommandBufferImpl>(_allocator, _allocator))
     {
 
     }

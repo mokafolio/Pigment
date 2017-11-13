@@ -13,6 +13,13 @@ using namespace stick;
 using namespace pic;
 using namespace crunch;
 
+class HighResFrameSaver
+{
+public:
+
+    using DrawTileCallback = std::function<void(const SubFrustumResult &, const FrustumTile & _tile)>;
+};
+
 int main(int _argc, const char * _args[])
 {
     // initialize glfw
@@ -88,15 +95,22 @@ int main(int _argc, const char * _args[])
         rss.setMultisampling(true);
         RenderStateHandle renderState = renderer.createRenderState(rss).ensure();
 
-        Mat4f transform = Mat4f::lookAt(Vec3f(0.0, 0.0, 0.25), Vec3f(0.0f), Vec3f(0, 1, 0));
-        //transform = Mat4f::identity();
-        Mat4f proj = Mat4f::perspective(30.0f, 800.0 / 600.0, 0.01, 10000.0);
+        Mat4f transform = Mat4f::lookAt(Vec3f(0.0, 0.0, 1.5), Vec3f(0.0f), Vec3f(0, 1, 0));
+        transform = Mat4f::identity();
+        Mat4f proj = Mat4f::perspective(50.0f, 800.0 / 600.0, 0.01, 100.0);
+        proj = Mat4f::ortho(-1.0, 1.0, -1.0, 1.0, -1, 1);
         //Mat4f proj = Mat4f::ortho(-1.0, 1.0, -1.0, 1.0, 0.1, 1000.0);
         //printf("transform %s\n", toString(transform).cString());
-        proj = Mat4f::identity();
-        transform = Mat4f::identity();
-        Mat4f tp = Mat4f::identity();
-        //Frustum frustum;
+        // proj = Mat4f::identity();
+        // transform = Mat4f::identity();
+        Mat4f tp = proj * transform;
+        Frustum frustum = Frustum::fromPerspective(50.0f, 800.0 / 600.0, 0.01, 100.0);
+        frustum = Frustum::fromOrtho(-1.0, 1.0, -1.0, 1.0, -1, 1);
+        auto spres = subFrustum(frustum, 1600.0f, 1200.0f, 3, 100.0f);
+        printf("SUB PERSPECTIVES: %lu\n", spres.tiles.count());
+
+        ImageRGB8 img(spres.pixelWidth, spres.pixelHeight);
+        ImageRGB8 tmpImg(spres.tilePixelWidth, spres.tilePixelHeight);
 
         // the main loop
         while (!glfwWindowShouldClose(window))
@@ -105,24 +119,35 @@ int main(int _argc, const char * _args[])
             int width, height;
             glfwGetFramebufferSize(window, &width, &height);
 
-            // add command to clear the frame buffer to a dark gray
-            cbuffer.clearBuffers(BufferType::Color, {{0.15, 0.15, 0.15, 1.0}, 1.0});
-            // set the viewport based on the window size
-            cbuffer.setViewport(0, 0, width, height);
-            cbuffer.setProgramVariableMatrix4f(program, "transformProjection", tp.ptr());
-            // schedule a drawing command using the renderstate, program and mesh for the triangle
-            cbuffer.draw(renderState, program, mesh, VertexDrawMode::Triangles, 0, 3);
-            // submit and clear the command buffer, this will actually do the GPU lifting.
-            Error err = renderer.submitCommandBuffer(cbuffer);
-            
-            if(err)
-                return EXIT_FAILURE;
+            for (auto & sp : spres.tiles)
+            {
+                // add command to clear the frame buffer to a dark gray
+                cbuffer.clearBuffers(BufferType::Color, {{0.15, 0.15, 0.15, 1.0}, 1.0});
+                // set the viewport based on the window size
+                cbuffer.setViewport(0, 0, width, height);
+                Mat4f tp = sp.frustum * transform;
+                cbuffer.setProgramVariableMatrix4f(program, "transformProjection", tp.ptr());
+                // schedule a drawing command using the renderstate, program and mesh for the triangle
+                cbuffer.draw(renderState, program, mesh, VertexDrawMode::Triangles, 0, 3);
+                // submit and clear the command buffer, this will actually do the GPU lifting.
+                Error err = renderer.submitCommandBuffer(cbuffer);
 
-            cbuffer.clear();
+                if (err)
+                    return EXIT_FAILURE;
 
-            //swap the glfw windows buffer & poll the window events
-            glfwSwapBuffers(window);
-            glfwPollEvents();
+                cbuffer.clear();
+                glReadPixels(spres.pixelBorderX, spres.pixelBorderY, spres.tilePixelWidth, spres.tilePixelHeight, GL_RGB, GL_UNSIGNED_BYTE, tmpImg.ptr());
+
+                //swap the glfw windows buffer & poll the window events
+                glfwSwapBuffers(window);
+                glfwPollEvents();
+
+                img.updatePixels(sp.x * tmpImg.width(), sp.y * tmpImg.height(), tmpImg.width(), tmpImg.height(), tmpImg.ptr());
+            }
+
+            img.saveFile("test.png");
+
+            return EXIT_SUCCESS;
         }
     }
     else

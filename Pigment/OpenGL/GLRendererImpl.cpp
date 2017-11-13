@@ -400,8 +400,7 @@ namespace pigment
 
         CommandBufferResult RendererImpl::createCommandBuffer()
         {
-            auto ptr = m_alloc->create<CommandBuffer>(*m_alloc);
-            m_commandBuffers.append(UniquePtr<CommandBuffer>(ptr));
+            m_commandBuffers.append(makeUnique<CommandBuffer>(*m_alloc, *m_alloc));
             return *m_commandBuffers.last();
         }
 
