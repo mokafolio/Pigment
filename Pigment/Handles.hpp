@@ -14,7 +14,7 @@
         }                                                                                          \
         bool isValid() const                                                                       \
         {                                                                                          \
-            return m_index != (Size)-1;                                                                  \
+            return m_index != (stick::Size)-1;                                                                  \
         }                                                                                          \
         bool operator==(const name & _other) const                                                 \
         {                                                                                          \
