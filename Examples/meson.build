@@ -4,7 +4,7 @@ deps = [dependency('glfw3')]
 if host_machine.system() == 'darwin'
     deps += [dependency('Cocoa'), dependency('IOKit'), dependency('CoreFoundation'), dependency('CoreVideo')]
 elif host_machine.system() == 'linux'
-    cc = meson.get_compiler('c')
+    cc = meson.get_compiler('cpp')
     deps += [dependency('x11'), 
             cc.find_library('dl', required : true),
             cc.find_library('m', required : true),
