@@ -9,7 +9,8 @@ using namespace pigment;
 using namespace stick;
 
 int main(int _argc, const char * _args[])
-{
+{   
+    printf("A\n");
     // initialize glfw
     if (!glfwInit())
         return EXIT_FAILURE;
@@ -21,6 +22,7 @@ int main(int _argc, const char * _args[])
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    printf("B\n");
     GLFWwindow * window = glfwCreateWindow(800, 600, "Hello Triangle Example", NULL, NULL);
     if (window)
     {
@@ -51,6 +53,7 @@ int main(int _argc, const char * _args[])
                                      1.0,  0.0, 1.0, 0.5, 0.5, 0.0, 0.0, 1.0,  1.0 };
         cbuffer.loadVertexData(vb, 18, triangleData);
 
+        printf("C\n");
         // a very simple vertex shader for the triangle
         String vertexShader =
             "#version 150 \n"
@@ -82,6 +85,8 @@ int main(int _argc, const char * _args[])
         rss.setMultisampling(true);
         RenderStateHandle renderState = renderer.createRenderState(rss).ensure();
 
+
+        printf("D\n");
         // the main loop
         while (!glfwWindowShouldClose(window))
         {
@@ -103,6 +108,8 @@ int main(int _argc, const char * _args[])
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
+
+        printf("E\n");
     }
     else
     {
@@ -113,6 +120,8 @@ int main(int _argc, const char * _args[])
     // clean up glfw
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    printf("F\n");
 
     return EXIT_SUCCESS;
 }
