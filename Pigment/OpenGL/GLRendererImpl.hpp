@@ -20,7 +20,7 @@ namespace pigment
     {
         using namespace stick;
 
-        class CommandBufferImpl;
+        struct CommandBufferImpl;
 
         struct STICK_LOCAL GLTexture
         {

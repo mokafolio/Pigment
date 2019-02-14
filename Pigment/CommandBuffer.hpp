@@ -57,8 +57,8 @@ namespace pigment
                              stick::Int32 _clearStencil = 0) :
             clearColor(_clearColor),
             clearDepth(_clearDepth),
-            stencilBackFaceWriteMask(_stencilWrite),
             stencilFrontFaceWriteMask(_stencilWrite),
+            stencilBackFaceWriteMask(_stencilWrite),
             clearStencil(_clearStencil)
         {
 
@@ -73,14 +73,14 @@ namespace pigment
 
     namespace detail
     {
-        class RendererImpl;
-        class CommandBufferImpl;
+        struct RendererImpl;
+        struct CommandBufferImpl;
         typedef stick::UniquePtr<CommandBufferImpl> CommandBufferImplPtr;
     }
 
     class STICK_API CommandBuffer
     {
-        friend class detail::RendererImpl;
+        friend struct detail::RendererImpl;
         friend class stick::Allocator;
         
     public:

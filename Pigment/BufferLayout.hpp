@@ -27,8 +27,8 @@ namespace pigment
             m_name(_name),
             m_elementCount(_elementCount),
             m_stride(_stride),
-            m_type(_dataType),
             m_location(_location),
+            m_type(_dataType),
             m_numberOfInstances(_numberOfInstances)
         {
         }

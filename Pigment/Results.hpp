@@ -10,7 +10,7 @@ namespace pigment
 
     class STICK_API RenderBuffer
     {
-        friend class detail::RendererImpl;
+        friend struct detail::RendererImpl;
 
     public:
 

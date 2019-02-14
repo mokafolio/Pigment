@@ -11,11 +11,11 @@
 
 namespace pigment
 {
-    class SamplerSettings;
+    struct SamplerSettings;
 
     namespace detail
     {
-        class RendererImpl;
+        struct RendererImpl;
         typedef stick::UniquePtr<RendererImpl> RendererImplUniquePtr;
     }
 

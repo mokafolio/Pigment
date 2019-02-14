@@ -5,7 +5,7 @@
 
 #define PIGMENT_HANDLE(name) class STICK_API name \
 { \
-    friend class detail::RendererImpl; \
+    friend struct detail::RendererImpl; \
     public: \
     name() : \
     m_index(-1), \
@@ -41,7 +41,7 @@ namespace pigment
 {
     namespace detail
     {
-        class RendererImpl;
+        struct RendererImpl;
     }
 
     PIGMENT_HANDLE(TextureHandle)
