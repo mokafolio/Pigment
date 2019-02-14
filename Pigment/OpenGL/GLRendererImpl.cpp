@@ -643,7 +643,7 @@ RenderBufferResult RendererImpl::createRenderBuffer(const RenderBufferSettings &
 
             ASSERT_NO_GL_ERROR(glGetIntegerv(GL_MAX_SAMPLES, &maxSamples));
 
-            if (renderBuffer.sampleCount > maxSamples)
+            if (renderBuffer.sampleCount > (UInt32)maxSamples)
                 renderBuffer.sampleCount = maxSamples;
 
             ASSERT_NO_GL_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, renderBuffer.glHandleMSAA));
@@ -1496,7 +1496,7 @@ Error RendererImpl::submit()
                     }
                 }
 
-                if (index == -1)
+                if (index == (Size)-1)
                 {
                     // TODO: Better error code?
                     ret = Error(ec::UnspecifiedError,
