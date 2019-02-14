@@ -1,4 +1,4 @@
-project('Pigment', 'cpp', default_options : ['cpp_std=c++14'])
+project('Pigment', ['cpp', 'c'], default_options : ['cpp_std=c++14'])
 
 if meson.is_subproject() == false
     # disable this bogus warning (should be deprecated in newer clang versions)

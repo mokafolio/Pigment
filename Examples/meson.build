@@ -11,11 +11,11 @@ elif host_machine.system() == 'linux'
             dependency('threads')]
 endif
 
-helloTriangleExample = executable('HelloTriangleExample', 'HelloTriangleExample.cpp', 
+helloTriangleExample = executable('HelloTriangleExample', ['HelloTriangleExample.cpp', 'GL/gl3w.c'], 
     dependencies: [pigmentDep] + deps, 
     include_directories : incDirs)
 
-renderBufferExample = executable('RenderBufferExample', 'RenderBufferExample.cpp', 
+renderBufferExample = executable('RenderBufferExample', ['RenderBufferExample.cpp', 'GL/gl3w.c'], 
     dependencies: [pigmentDep] + deps, 
     include_directories : incDirs)
 
