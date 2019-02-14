@@ -1485,7 +1485,7 @@ Error RendererImpl::submit()
                 {
                     for (Size i = 0; i < program.textureUnits.count(); ++i)
                     {
-                        if (program.textureUnits[i].uniformIndex == -1)
+                        if (program.textureUnits[i].uniformIndex == (Size)-1)
                         {
                             program.textureUnits[i].texture = atcmd.texture;
                             program.textureUnits[i].sampler = atcmd.sampler;
@@ -1528,7 +1528,7 @@ Error RendererImpl::submit()
                     // activate textures
                     for (Size i = 0; i < program.textureUnits.count(); ++i)
                     {
-                        if (program.textureUnits[i].uniformIndex != -1)
+                        if (program.textureUnits[i].uniformIndex != (Size)-1)
                         {
                             const GLTexture & tex = m_textures.get(program.textureUnits[i].texture);
                             bool bTexAllreadyBound = false;
