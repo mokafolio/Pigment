@@ -5,19 +5,24 @@
 
 namespace pigment
 {
-    class STICK_API VertexLayout : public BufferLayout
-    {
-    public:
+class STICK_API VertexLayout : public BufferLayout
+{
+  public:
+    VertexLayout();
 
-        VertexLayout();
+    ~VertexLayout();
 
-        ~VertexLayout();
+    VertexLayout & addInstanceElement(stick::Size _numberOfInstances,
+                                      const stick::String & _name,
+                                      stick::Size _size,
+                                      stick::UInt32 _location,
+                                      BufferDataType _dataType = BufferDataType::Float32);
 
+    VertexLayout & addInstanceElement(stick::Size _numberOfInstances,
+                                      const stick::String & _name,
+                                      stick::Size _size,
+                                      BufferDataType _dataType = BufferDataType::Float32);
+};
+} // namespace pigment
 
-        VertexLayout & addInstanceElement(stick::Size _numberOfInstances, const stick::String & _name, stick::Size _size, stick::UInt32 _location, BufferDataType _dataType = BufferDataType::Float32);
-
-        VertexLayout & addInstanceElement(stick::Size _numberOfInstances, const stick::String & _name, stick::Size _size, BufferDataType _dataType = BufferDataType::Float32);
-    };
-}
-
-#endif //PIGMENT_VERTEXLAYOUT_HPP
+#endif // PIGMENT_VERTEXLAYOUT_HPP

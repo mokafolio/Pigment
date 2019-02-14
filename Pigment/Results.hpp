@@ -6,40 +6,40 @@
 
 namespace pigment
 {
-    class CommandBuffer;
+class CommandBuffer;
 
-    class STICK_API RenderBuffer
-    {
-        friend struct detail::RendererImpl;
+class STICK_API RenderBuffer
+{
+    friend struct detail::RendererImpl;
 
-    public:
+  public:
+    typedef stick::DynamicArray<TextureHandle> TextureHandleArray;
 
-        typedef stick::DynamicArray<TextureHandle> TextureHandleArray;
+    const TextureHandleArray & colorTargets() const;
 
-        const TextureHandleArray & colorTargets() const;
+    const TextureHandle & depthTarget() const;
 
-        const TextureHandle & depthTarget() const;
+    const RenderBufferHandle & handle() const;
 
-        const RenderBufferHandle & handle() const;
+  private:
+    RenderBuffer(const RenderBufferHandle & _handle,
+                 const TextureHandleArray & _colorTargets,
+                 const TextureHandle & _depthTarget = TextureHandle());
 
-    private:
+    RenderBufferHandle m_handle;
+    TextureHandleArray m_colorTargets;
+    TextureHandle m_depthTarget;
+};
 
-        RenderBuffer(const RenderBufferHandle & _handle, const TextureHandleArray & _colorTargets, const TextureHandle & _depthTarget = TextureHandle());
+typedef stick::Result<TextureHandle> TextureHandleResult;
+typedef stick::Result<SamplerHandle> SamplerHandleResult;
+typedef stick::Result<ProgramHandle> ProgramHandleResult;
+typedef stick::Result<MeshHandle> MeshHandleResult;
+typedef stick::Result<VertexBufferHandle> VertexBufferHandleResult;
+typedef stick::Result<IndexBufferHandle> IndexBufferHandleResult;
+typedef stick::Result<RenderStateHandle> RenderStateHandleResult;
+typedef stick::Result<CommandBuffer &> CommandBufferResult;
+typedef stick::Result<RenderBuffer> RenderBufferResult;
+} // namespace pigment
 
-        RenderBufferHandle m_handle;
-        TextureHandleArray m_colorTargets;
-        TextureHandle m_depthTarget;
-    };
-
-    typedef stick::Result<TextureHandle> TextureHandleResult;
-    typedef stick::Result<SamplerHandle> SamplerHandleResult;
-    typedef stick::Result<ProgramHandle> ProgramHandleResult;
-    typedef stick::Result<MeshHandle> MeshHandleResult;
-    typedef stick::Result<VertexBufferHandle> VertexBufferHandleResult;
-    typedef stick::Result<IndexBufferHandle> IndexBufferHandleResult;
-    typedef stick::Result<RenderStateHandle> RenderStateHandleResult;
-    typedef stick::Result<CommandBuffer &> CommandBufferResult;
-    typedef stick::Result<RenderBuffer> RenderBufferResult;
-}
-
-#endif //PIGMENT_RESULTS_HPP
+#endif // PIGMENT_RESULTS_HPP

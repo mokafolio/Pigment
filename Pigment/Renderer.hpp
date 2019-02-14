@@ -1,83 +1,86 @@
 #ifndef PIGMENT_RENDERER_HPP
 #define PIGMENT_RENDERER_HPP
 
-#include <Pigment/Settings.hpp>
+#include <Pigment/CommandBuffer.hpp>
 #include <Pigment/RenderStateSettings.hpp>
 #include <Pigment/Results.hpp>
-#include <Pigment/CommandBuffer.hpp>
+#include <Pigment/Settings.hpp>
 #include <Stick/Error.hpp>
-#include <Stick/UniquePtr.hpp>
 #include <Stick/Result.hpp>
+#include <Stick/UniquePtr.hpp>
 
 namespace pigment
 {
-    struct SamplerSettings;
+struct SamplerSettings;
 
-    namespace detail
-    {
-        struct RendererImpl;
-        typedef stick::UniquePtr<RendererImpl> RendererImplUniquePtr;
-    }
+namespace detail
+{
+struct RendererImpl;
+typedef stick::UniquePtr<RendererImpl> RendererImplUniquePtr;
+} // namespace detail
 
-    class STICK_API Renderer
-    {
-    public:
+class STICK_API Renderer
+{
+  public:
+    Renderer(stick::Allocator & _alloc = stick::defaultAllocator());
 
-        Renderer(stick::Allocator & _alloc = stick::defaultAllocator());
+    ~Renderer();
 
-        ~Renderer();
+    CommandBufferResult createCommandBuffer();
 
+    void destroyCommandBuffer(CommandBuffer & _buffer);
 
-        CommandBufferResult createCommandBuffer();
+    TextureHandleResult createTexture();
 
-        void destroyCommandBuffer(CommandBuffer & _buffer);
+    void destroyTexture(const TextureHandle & _tex);
 
-        TextureHandleResult createTexture();
+    SamplerHandleResult createSampler(const SamplerSettings & _settings);
 
-        void destroyTexture(const TextureHandle & _tex);
+    void destroySampler(const SamplerHandle & _sampler);
 
-        SamplerHandleResult createSampler(const SamplerSettings & _settings);
+    RenderBufferResult createRenderBuffer(const RenderBufferSettings & _settings);
 
-        void destroySampler(const SamplerHandle & _sampler);
+    void destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle,
+                             bool _bDestroyRenderTargets = true);
 
-        RenderBufferResult createRenderBuffer(const RenderBufferSettings & _settings);
+    ProgramHandleResult createProgram(const ProgramSettings & _settings);
 
-        void destroyRenderBuffer(const RenderBufferHandle & _renderBufferHandle, bool _bDestroyRenderTargets = true);
+    void destroyProgram(const ProgramHandle & _handle);
 
-        ProgramHandleResult createProgram(const ProgramSettings & _settings);
+    MeshHandleResult createMesh(const MeshSettings & _settings);
 
-        void destroyProgram(const ProgramHandle & _handle);
+    void destroyMesh(const MeshHandle & _mesh);
 
-        MeshHandleResult createMesh(const MeshSettings & _settings);
+    VertexBufferHandleResult createVertexBuffer(const VertexLayout & _layout, BufferUsage _usage);
 
-        void destroyMesh(const MeshHandle & _mesh);
+    void destroyVertexBuffer(const VertexBufferHandle & _handle);
 
-        VertexBufferHandleResult createVertexBuffer(const VertexLayout & _layout, BufferUsage _usage);
+    IndexBufferHandleResult createIndexBuffer(BufferUsage _usage);
 
-        void destroyVertexBuffer(const VertexBufferHandle & _handle);
+    void destroyIndexBuffer(const IndexBufferHandle & _handle);
 
-        IndexBufferHandleResult createIndexBuffer(BufferUsage _usage);
+    RenderStateHandleResult createRenderState(const RenderStateSettings & _settings);
 
-        void destroyIndexBuffer(const IndexBufferHandle & _handle);
+    void destoyRenderState(const RenderStateHandle & _handle);
 
-        RenderStateHandleResult createRenderState(const RenderStateSettings & _settings);
+    void addCommandBuffer(const CommandBuffer & _buffer);
 
-        void destoyRenderState(const RenderStateHandle & _handle);
+    stick::Error submit();
 
-        void addCommandBuffer(const CommandBuffer & _buffer);
+    stick::Error submitCommandBuffer(const CommandBuffer & _buffer);
 
-        stick::Error submit();
+    // functions to read pixels from the default/window framebuffer
+    // TODO: should these be commands?
+    void readPixels(stick::UInt32 _left,
+                    stick::UInt32 _bottom,
+                    stick::UInt32 _width,
+                    stick::UInt32 _height,
+                    TextureFormat _format,
+                    void * _pixels);
 
-        stick::Error submitCommandBuffer(const CommandBuffer & _buffer);
+  private:
+    detail::RendererImplUniquePtr m_pimpl;
+};
+} // namespace pigment
 
-        //functions to read pixels from the default/window framebuffer
-        //TODO: should these be commands?
-        void readPixels(stick::UInt32 _left, stick::UInt32 _bottom, stick::UInt32 _width, stick::UInt32 _height, TextureFormat _format, void * _pixels);
-
-    private:
-
-        detail::RendererImplUniquePtr m_pimpl;
-    };
-}
-
-#endif //PIGMENT_RENDERER_HPP
+#endif // PIGMENT_RENDERER_HPP

@@ -5,49 +5,47 @@
 
 namespace pigment
 {
-    namespace ec
-    {
-        enum PigmentErrorCode
-        {
-            UnsupportedRenderFeature = 1,
-            BadRenderBuffer,
-            BadGPUProgram,
-            BadProgramVariable,
-            UnspecifiedError
-        };
-    }
-
-    class STICK_API PigmentErrorCategory :
-        public stick::ErrorCategory
-    {
-    public:
-
-        PigmentErrorCategory();
-
-        stick::String description(const stick::Error & _code) const;
-    };
-
-    namespace detail
-    {
-        STICK_API const PigmentErrorCategory & pigmentErrorCategory();
-    }
+namespace ec
+{
+enum PigmentErrorCode
+{
+    UnsupportedRenderFeature = 1,
+    BadRenderBuffer,
+    BadGPUProgram,
+    BadProgramVariable,
+    UnspecifiedError
+};
 }
+
+class STICK_API PigmentErrorCategory : public stick::ErrorCategory
+{
+  public:
+    PigmentErrorCategory();
+
+    stick::String description(const stick::Error & _code) const;
+};
+
+namespace detail
+{
+STICK_API const PigmentErrorCategory & pigmentErrorCategory();
+}
+} // namespace pigment
 
 namespace stick
 {
-    namespace detail
-    {
-        template<>
-        struct isErrorEnum<pigment::ec::PigmentErrorCode>
-        {
-            static const bool value = true;
-        };
+namespace detail
+{
+template <>
+struct isErrorEnum<pigment::ec::PigmentErrorCode>
+{
+    static const bool value = true;
+};
 
-        inline const stick::ErrorCategory & errorCategory(pigment::ec::PigmentErrorCode)
-        {
-            return pigment::detail::pigmentErrorCategory();
-        }
-    }
+inline const stick::ErrorCategory & errorCategory(pigment::ec::PigmentErrorCode)
+{
+    return pigment::detail::pigmentErrorCategory();
 }
+} // namespace detail
+} // namespace stick
 
-#endif //PIGMENT_ERRORCODES_HPP
+#endif // PIGMENT_ERRORCODES_HPP
