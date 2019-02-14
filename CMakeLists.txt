@@ -43,4 +43,4 @@ target_link_libraries(PigmentStatic ${PIGMENTDEPS})
 install (TARGETS Pigment PigmentStatic DESTINATION /usr/local/lib)
 install (FILES ${PIGMENTINC} DESTINATION /usr/local/include/Pigment)
 
-add_subdirectory (Examples)
+#add_subdirectory (Examples)

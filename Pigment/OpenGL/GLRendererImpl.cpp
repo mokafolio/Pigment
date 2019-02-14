@@ -395,6 +395,8 @@ void * getGLFunctionPointer(const char * _name)
     return (void *)dlsym(RTLD_DEFAULT, _name);
 #elif STICK_PLATFORM == STICK_PLATFORM_LINUX
     return (void *)glXGetProcAddress((GLubyte *)_name);
+#else
+    #error "Unsupported Platform!"
 #endif
 }
 
